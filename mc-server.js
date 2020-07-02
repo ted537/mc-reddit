@@ -8,7 +8,6 @@ function mcShortBytes(num) {
 }
 
 function createResponse({text,players,max_players}) {
-    console.log(text)
     const json = {
         "description":{
             "text":text
@@ -19,8 +18,6 @@ function createResponse({text,players,max_players}) {
         }
     }
     const body = JSON.stringify(json);
-    console.log(body);
-    console.log(body.length)
 
     // byte representations for body length
     const inner_len_bytes = mcShortBytes(body.length);
