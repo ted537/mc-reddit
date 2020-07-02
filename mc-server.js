@@ -8,9 +8,10 @@ function mcShortBytes(num) {
 }
 
 function createResponse({text,players,max_players}) {
+    console.log(text)
     const json = {
         "description":{
-            "text":text
+            "text":text.replace("’",'')
         },
         "players":{"max":max_players,"online":players},
         "version":{
@@ -32,7 +33,7 @@ function createResponse({text,players,max_players}) {
         inner_len_bytes.big
     ]);
 
-    const response = Buffer.concat([header,Buffer.from(body)]);
+    const response = Buffer.concat([header,Buffer.from(body,'ascii')]);
     return response;
 }
 
