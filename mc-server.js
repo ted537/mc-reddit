@@ -43,7 +43,8 @@ function fakeMcServer(getServerInfo) {
                 if (data[data.length-2]==0x01 || data[data.length-1]==0x00) {
                     console.log('responding');
                     const response = createResponse(await getServerInfo());
-                    socket.write(response);
+                    if (!socket.destroyed)
+                        socket.write(response);
                 }
                 if (data[0]==0x09 && data[1]==0x01) {
                     console.log('verifying')

@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
 const fakeMcServer = require('./mc-server');
+const merge = require('./merge-promise')
 
 const PORT_START = 25565;
 const PORT_COUNT = 5;
@@ -14,12 +15,18 @@ function ports() {
 
 let after = ''
 
-async function getRedditInfo(index) {
+async function getRedditJson() {
+    console.log('fetching JSON')
     const response = await fetch(`http://reddit.com/best.json?count=5&after=${after}`);
     const json = await response.json();
     after = json.data.after;
+    return json;
+}
 
-    const post = json.data.children[index].data;
+async function getRedditInfo(row) {
+    console.log('getting row '+row)
+    const json = await merge(getRedditJson);
+    const post = json.data.children[row].data;
     return {
         text:post.title,
         players:post.score,
