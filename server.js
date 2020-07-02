@@ -1,11 +1,18 @@
-const net = require('net');
+const fetch = require('node-fetch');
+
 const fakeMcServer = require('./mc-server');
 
-const server = fakeMcServer(()=>{
+async function getRedditInfo() {
+    const response = await fetch('http://reddit.com/best.json');
+    const json = await response.json();
+    const post = json.data.children[0].data;
+
     return {
-        text:'hi there',
-        players:10,
-        max_players:20
+        text:post.title,
+        players:post.score,
+        max_players:post.num_comments
     }
-})
+}
+
+const server = fakeMcServer(getRedditInfo);
 server.listen(25566);

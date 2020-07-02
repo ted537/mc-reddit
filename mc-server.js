@@ -8,6 +8,7 @@ function mcShortBytes(num) {
 }
 
 function createResponse({text,players,max_players}) {
+    console.log(text)
     const json = {
         "description":{
             "text":text
@@ -18,6 +19,8 @@ function createResponse({text,players,max_players}) {
         }
     }
     const body = JSON.stringify(json);
+    console.log(body);
+    console.log(body.length)
 
     // byte representations for body length
     const inner_len_bytes = mcShortBytes(body.length);
@@ -39,10 +42,10 @@ function createResponse({text,players,max_players}) {
 function fakeMcServer(getServerInfo) {
     return net.createServer(
         socket=>{
-            socket.on('data',data=>{
+            socket.on('data',async data=>{
                 if (data[data.length-2]==0x01 || data[data.length-1]==0x00) {
                     console.log('responding');
-                    const response = createResponse(getServerInfo());
+                    const response = createResponse(await getServerInfo());
                     socket.write(response);
                 }
                 if (data[0]==0x09 && data[1]==0x01) {
