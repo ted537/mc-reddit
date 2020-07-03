@@ -33,7 +33,7 @@ async function getRedditInfo(row) {
         max_players:post.num_comments
     }
     if (post.thumbnail.startsWith('http://') || post.thumbnail.startsWith('https://')) {
-        const url = await asPngDataUrl(post.thumbnail);
+        const url = await asPngDataUrl(post.thumbnail,post.title);
         info.favicon = url;
     }
     return info;
