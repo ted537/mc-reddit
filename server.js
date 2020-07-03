@@ -1,8 +1,7 @@
-const fetch = require('node-fetch');
-
 const fakeMcServer = require('./mc-server');
-const merge = require('./merge-promise');
+const bottleneck = require('./bottleneck');
 const { asPngDataUrl } = require('./png-convert');
+const { getRedditPost } = require('./reddit');
 
 const PORT_START = 25565;
 const PORT_COUNT = 10;
@@ -14,18 +13,8 @@ function ports() {
     return list;
 }
 
-let after = ''
-
-async function getRedditJson() {
-    const response = await fetch(`http://reddit.com/best.json?count=5&after=${after}`);
-    const json = await response.json();
-    after = json.data.after;
-    return json;
-}
-
 async function getRedditInfo(row) {
-    const json = await merge(getRedditJson);
-    const post = json.data.children[row].data;
+    const post = await bottleneck(getRedditPost);
 
     const thumbnail = post.thumbnail.startsWith('http') ?
         post.thumbnail : 'logo-small.png'
