@@ -27,14 +27,13 @@ async function getRedditInfo(row) {
     const json = await merge(getRedditJson);
     const post = json.data.children[row].data;
 
+    const thumbnail = post.thumbnail.startsWith('http') ?
+      post.thumbnail : 'reddit-logo.png'
     const info = {
         text:post.title,
         players:post.score,
-        max_players:post.num_comments
-    }
-    if (post.thumbnail.startsWith('http://') || post.thumbnail.startsWith('https://')) {
-        const url = await asPngDataUrl(post.thumbnail,post.title);
-        info.favicon = url;
+        max_players:post.num_comments,
+        favicon:await asPngDataUrl(thumbnail,post.title)
     }
     return info;
 }
