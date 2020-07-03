@@ -9,7 +9,7 @@ function needToFetch() {
 
 async function getRedditJson() {
     const after = '' || (post_list && post_list.data.after);
-    const response = await fetch(`http://reddit.com/best.json?after=${after}`);
+    const response = await fetch(`http://reddit.com/best.json?count=100&after=${after}`);
     const json = await response.json();
     return json;
 }
