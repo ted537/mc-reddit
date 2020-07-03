@@ -12,6 +12,7 @@ function cleanText(text) {
         // normalize quotes
         .replace(/[\u2018\u2019]/g, "'")
         .replace(/[\u201C\u201D]/g, '"');
+        
     let printable = ''
     for (let i=0;i<normalized.length;++i) {
         const code = normalized.charCodeAt(i);
