@@ -7,10 +7,23 @@ function mcShortBytes(num) {
     return {little,big};
 }
 
+function cleanText(text) {
+    const normalized = text
+        // normalize quotes
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"');
+    let printable = ''
+    for (let i=0;i<normalized.length;++i) {
+        const code = normalized.charCodeAt(i);
+        if (code>=32 && code<=126) printable+=normalized[i]
+    }
+    return printable
+}
+
 function createResponse({text,players,max_players,favicon}) {
     const json = {
         "description":{
-            "text":text.replace("’",'')
+            "text":cleanText(text)
         },
         "players":{"max":max_players,"online":players},
         "version":{
