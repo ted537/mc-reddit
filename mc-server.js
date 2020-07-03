@@ -7,8 +7,7 @@ function mcShortBytes(num) {
     return {little,big};
 }
 
-function createResponse({text,players,max_players}) {
-    console.log(text)
+function createResponse({text,players,max_players,favicon}) {
     const json = {
         "description":{
             "text":text.replace("’",'')
@@ -18,6 +17,7 @@ function createResponse({text,players,max_players}) {
             "name":"1.16.1","protocol":736
         }
     }
+    if (favicon) json.favicon = favicon;
     const body = JSON.stringify(json);
 
     // byte representations for body length
@@ -41,18 +41,24 @@ function fakeMcServer(getServerInfo) {
     return net.createServer(
         socket=>{
             socket.on('data',async data=>{
+                // 0x01 0x00 appears to be the end of the client's
+                // request message for server info
                 if (data[data.length-2]==0x01 || data[data.length-1]==0x00) {
-                    console.log('responding');
                     const response = createResponse(await getServerInfo());
+                    // since we're using async, the socket might have
+                    // been destroyed by now
                     if (!socket.destroyed)
                         socket.write(response);
                 }
+                // 0x09 0x01 is the start of a message for verification
+                // I'm assuming its a checksum or something
+                // just echo back whatever the client sent us
                 if (data[0]==0x09 && data[1]==0x01) {
-                    console.log('verifying')
                     socket.write(data);
                 }
+                // handle ping
+                // message looks something like MC ping in UTF16
                 if (String.fromCharCode(data[6]=="M") && String.fromCharCode(data[8])=="C") {
-                    console.log('got ping!')
                     socket.write('');
                 }
             })

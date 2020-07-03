@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "jimp": "^0.14.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
