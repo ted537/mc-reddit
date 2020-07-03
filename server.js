@@ -28,7 +28,7 @@ async function getRedditInfo(row) {
     const post = json.data.children[row].data;
 
     const thumbnail = post.thumbnail.startsWith('http') ?
-      post.thumbnail : 'reddit-logo.png'
+      post.thumbnail : 'logo-small.png'
     const info = {
         text:post.title,
         players:post.score,
