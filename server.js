@@ -1,6 +1,6 @@
 const fakeMcServer = require('./mc-server');
 const bottleneck = require('./bottleneck');
-const { asPngDataUrl } = require('./png-convert');
+const { asPngDataUrlCached } = require('./png-convert');
 const { getRedditPost } = require('./reddit');
 
 const PORT_START = 25565;
@@ -22,7 +22,7 @@ async function getRedditInfo(row) {
         text:post.title,
         players:post.score,
         max_players:post.num_comments,
-        favicon:await asPngDataUrl(thumbnail,post.title)
+        favicon:await asPngDataUrlCached(thumbnail)
     }
     return info;
 }
