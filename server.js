@@ -5,7 +5,7 @@ const merge = require('./merge-promise');
 const { asPngDataUrl } = require('./png-convert');
 
 const PORT_START = 25565;
-const PORT_COUNT = 5;
+const PORT_COUNT = 10;
 
 function ports() {
     const list = [];
