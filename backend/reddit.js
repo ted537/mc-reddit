@@ -1,3 +1,4 @@
+const path = require('path');
 const fetch = require('node-fetch');
 const { asPngDataUrlCached } = require('./png-convert');
 
@@ -40,8 +41,9 @@ async function fakeServerInfos() {
 }
 
 async function serverInfoForRedditPost(post) {
+    const logo_fname = path.join(__dirname,'logo-small.png');
     const thumbnail = post.thumbnail.startsWith('http') ?
-        post.thumbnail : 'logo-small.png'
+        post.thumbnail : logo_fname
     const info = {
         text:post.title,
         players:post.score,
