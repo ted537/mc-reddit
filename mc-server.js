@@ -54,11 +54,12 @@ function createResponse({text,players,max_players,favicon}) {
 function fakeMcServer(getServerInfo) {
     return net.createServer(
         socket=>{
-            socket.on('data',async data=>{
+            socket.on('data',data=>{
                 // 0x01 0x00 appears to be the end of the client's
                 // request message for server info
                 if (data[data.length-2]==0x01 || data[data.length-1]==0x00) {
-                    const response = createResponse(await getServerInfo());
+                    const client = socket.remoteAddress;
+                    const response = createResponse(getServerInfo(client));
                     // since we're using async, the socket might have
                     // been destroyed by now
                     if (!socket.destroyed)

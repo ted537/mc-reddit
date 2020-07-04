@@ -31,7 +31,9 @@ async function fakeServerInfos() {
         posts.push(await getRedditPost());
     console.log('finished preloading posts')
     console.log('fetching images');
-    const post_infos = posts.map(serverInfoForRedditPost);
+    const post_infos = await Promise.all(
+        posts.map(serverInfoForRedditPost)
+    );
     console.log('finished fetching images');
     return post_infos;
 }
