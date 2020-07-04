@@ -1,0 +1,31 @@
+body {
+    margin:0;
+    background: url('img/dirt.jpg') repeat;
+    background-size:128px 128px;
+}
+
+.container {
+    width:100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.inner {
+    background: url('img/stone.jpg') repeat;
+    background-size:128px 128px;
+    padding:50px;
+    min-width: 50vw;
+}
+
+.connect-text {
+    background:white;
+    padding:20px;
+    box-shadow: 0 0 2px 2px;
+
+    font-size:24px;
+}
+
+.big-img {
+    width: fit-content;
+}
