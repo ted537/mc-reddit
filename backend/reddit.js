@@ -23,7 +23,7 @@ async function getRedditPost() {
     return post_list.data.children[post_index++].data;
 }
 
-const PRELOAD_POST_COUNT = 20;
+const PRELOAD_POST_COUNT = 1000;
 async function fakeServerInfos() {
     console.log('started preloading posts')
     const posts = [];
