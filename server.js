@@ -19,7 +19,6 @@ const servers = ports().map(port=>{
     const server = fakeMcServer(client=>{
         refresh_counts[client] = refresh_counts[client] || 0;
         const refresh_count = refresh_counts[client];
-        console.log(refresh_counts)
         const index = refresh_count%server_infos.length
         const server_info = server_infos[index]
         ++refresh_counts[client];

@@ -30,9 +30,10 @@ async function fakeServerInfos() {
     for (let i=0;i<PRELOAD_POST_COUNT;++i)
         posts.push(await getRedditPost());
     console.log('finished preloading posts')
+    const safe_posts = posts.filter(post=>!post.over_18);
     console.log('fetching images');
     const post_infos = await Promise.all(
-        posts.map(serverInfoForRedditPost)
+        safe_posts.map(serverInfoForRedditPost)
     );
     console.log('finished fetching images');
     return post_infos;
