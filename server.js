@@ -1,7 +1,5 @@
 const fakeMcServer = require('./mc-server');
-const bottleneck = require('./bottleneck');
-const { asPngDataUrlCached } = require('./png-convert');
-const { getRedditPost } = require('./reddit');
+const { fakeServerInfos } = require('./reddit');
 
 const PORT_START = 25565;
 const PORT_COUNT = 10;
@@ -13,22 +11,14 @@ function ports() {
     return list;
 }
 
-async function getRedditInfo(row) {
-    const post = await bottleneck(getRedditPost);
-
-    const thumbnail = post.thumbnail.startsWith('http') ?
-        post.thumbnail : 'logo-small.png'
-    const info = {
-        text:post.title,
-        players:post.score,
-        max_players:post.num_comments,
-        favicon:await asPngDataUrlCached(thumbnail)
-    }
-    return info;
-}
+let server_infos = [];
+fakeServerInfos().then(infos=>server_infos=infos);
 
 const servers = ports().map(port=>{
-    const server = fakeMcServer(()=>getRedditInfo(port-PORT_START))
+    let refresh_count=0;
+    const server = fakeMcServer(
+        ()=>server_infos[refresh_count++%server_infos.length]
+    )
     server.listen(port);
     return server;
 });
