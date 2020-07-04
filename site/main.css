@@ -8,7 +8,6 @@ body {
     width:100%;
     display: flex;
     justify-content: center;
-
 }
 
 .inner {
@@ -18,14 +17,15 @@ body {
     min-width: 50vw;
 }
 
-.connect-text {
+.text-box {
     background:white;
     padding:20px;
+    margin: 10px;
     box-shadow: 0 0 2px 2px;
 
     font-size:24px;
 }
 
 .big-img {
-    width: fit-content;
+    max-width: 100%;
 }
