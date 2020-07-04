@@ -12,7 +12,8 @@ function ports() {
 }
 
 let server_infos = [];
-fakeServerInfos().then(infos=>server_infos=infos);
+const num_posts = process.argv[2] || 100;
+fakeServerInfos(num_posts).then(infos=>server_infos=infos);
 
 const refresh_counts={};
 const servers = ports().map(port=>{

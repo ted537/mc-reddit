@@ -24,11 +24,10 @@ async function getRedditPost() {
     return post_list.data.children[post_index++].data;
 }
 
-const PRELOAD_POST_COUNT = 1000;
-async function fakeServerInfos() {
+async function fakeServerInfos(amount) {
     console.log('started preloading posts')
     const posts = [];
-    for (let i=0;i<PRELOAD_POST_COUNT;++i)
+    for (let i=0;i<amount;++i)
         posts.push(await getRedditPost());
     console.log('finished preloading posts')
     const safe_posts = posts.filter(post=>!post.over_18);
