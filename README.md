@@ -1,5 +1,5 @@
 # mc-reddit
-Browse reddit from the minecraft server list. [mc-reddit.com](mc-reddit.com)
+Browse reddit from the minecraft server list. [mc-reddit.com](https://mc-reddit.com)
 
 ## Overview
 The top X posts are grabbed from best
