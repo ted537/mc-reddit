@@ -76,6 +76,9 @@ function fakeMcServer(getServerInfo) {
                 if (String.fromCharCode(data[6]=="M") && String.fromCharCode(data[8])=="C") {
                     socket.write('');
                 }
+            });
+            socket.on('error',error=>{
+                console.warn(`socket error: ${error}`);
             })
         }
     )
