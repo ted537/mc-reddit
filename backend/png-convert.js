@@ -11,9 +11,16 @@ async function asPngDataUrl(url) {
 }
 
 const cached_data_urls = {};
-async function asPngDataUrlCached(url) {
+async function asPngDataUrlCached(url,fallback) {
     if (!cached_data_urls.hasOwnProperty(url)) {
-        cached_data_urls[url] = await asPngDataUrl(url);
+        try {
+            cached_data_urls[url] = await asPngDataUrl(url);
+        }
+        catch(err) {
+            console.warn(`error when loading thumbnail: ${err}`);
+            cached_data_urls[url] = await asPngDataUrlCached(fallback);
+            return cached_data_urls[url];
+        }
     }
     return cached_data_urls[url];
 }

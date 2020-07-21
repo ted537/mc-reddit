@@ -47,7 +47,7 @@ async function serverInfoForRedditPost(post) {
         text:post.title,
         players:post.score,
         max_players:post.num_comments,
-        favicon:await asPngDataUrlCached(thumbnail)
+        favicon:await asPngDataUrlCached(thumbnail,logo_fname)
     }
     return info;
 }
